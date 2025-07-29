@@ -1,32 +1,40 @@
-/* Reset default browser styles */
+/* ----------------------
+   Base Reset & Defaults
+------------------------ */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* General body styling */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   line-height: 1.6;
   background-color: #fdfdfd;
   color: #333;
 }
 
-/* Header styles */
+/* ----------------------
+   Header / Navbar
+------------------------ */
 header {
   background-color: #a020f0;
-  color: white;
   padding: 20px 0;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   max-width: 1100px;
   margin: auto;
   padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
 }
 
@@ -38,56 +46,67 @@ header {
 nav ul {
   list-style: none;
   display: flex;
-  flex-direction: row;
   gap: 20px;
   flex-wrap: wrap;
-  justify-content: flex-end;
 }
 
 nav a {
   color: white;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 600;
+  padding: 6px 10px;
 }
 
-nav a:hover {
-  text-decoration: underline;
+nav a:hover,
+nav a.active {
+  background-color: #fff;
+  color: #a020f0;
+  border-radius: 4px;
 }
 
-/* Hero section */
+/* ----------------------
+   Hero Section
+------------------------ */
 .hero {
-  background-color: #f8f1ff;
-  padding: 60px 20px;
+  background: linear-gradient(to right, #f5e1ff, #f8f1ff);
+  padding: 80px 20px;
   text-align: center;
 }
 
-.hero-content {
-  max-width: 900px;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.hero-image {
-  width: 100px;
-  height: 100px;
-  background-color: #a020f0;
-  color: white;
-  border-radius: 50%;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2rem;
+.hero h1 {
+  font-size: 2.5rem;
+  color: #a020f0;
   margin-bottom: 20px;
 }
 
-/* Section styles */
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #a020f0;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #8100c7;
+}
+
+/* ----------------------
+   Sections (About, Services, etc)
+------------------------ */
 .section {
   padding: 60px 20px;
   max-width: 1000px;
   margin: auto;
+  text-align: center;
 }
 
 .section h2 {
@@ -100,19 +119,22 @@ nav a:hover {
   font-size: 1.1rem;
 }
 
-/* Services grid */
+/* ----------------------
+   Services Grid
+------------------------ */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .service-item {
-  background-color: #fafafa;
+  background-color: #fff;
   padding: 20px;
-  border: 1px solid #ddd;
+  border: 1px solid #eee;
   border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
 .service-item h3 {
@@ -120,11 +142,37 @@ nav a:hover {
   margin-bottom: 10px;
 }
 
-/* Contact section */
+/* ----------------------
+   Testimonials
+------------------------ */
+.testimonials {
+  background-color: #f5f5f5;
+}
+
+.testimonial {
+  background: white;
+  padding: 20px;
+  border-left: 5px solid #a020f0;
+  margin: 20px auto;
+  max-width: 700px;
+  border-radius: 8px;
+}
+
+.testimonial h4 {
+  margin-top: 10px;
+  font-weight: 600;
+  color: #555;
+}
+
+/* ----------------------
+   Contact
+------------------------ */
 .contact-info {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 30px;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .contact-item {
@@ -136,49 +184,49 @@ nav a:hover {
   margin-bottom: 5px;
 }
 
-/* Footer */
+/* ----------------------
+   Footer
+------------------------ */
 footer {
   background-color: #a020f0;
   color: white;
   text-align: center;
-  padding: 15px 0;
+  padding: 20px 10px;
   margin-top: 40px;
 }
 
-/* Responsive tweaks */
+/* ----------------------
+   Responsive Layout
+------------------------ */
 @media (max-width: 768px) {
-  .header-container {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
   }
 
   nav ul {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: flex-end;
-  }
-
-  .hero-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    justify-content: center;
   }
 }
 
 @media (max-width: 480px) {
-  .hero-image {
-    width: 80px;
-    height: 80px;
+  .logo {
     font-size: 1.5rem;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
   }
 
-  .section h2,
-  .hero-text h1 {
-    font-size: 1.4rem;
+  .btn-primary {
+    font-size: 1rem;
+    padding: 10px 18px;
+  }
+
+  .section h2 {
+    font-size: 1.5rem;
   }
 
   .section p {
