@@ -1,41 +1,20 @@
-!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <title>Box Model Practice 3</title>
-   <style>
-  .example-box {
-    width: 150px;
-    height: 80px;
-    padding: 15px;
-    border: 2px solid green;
-    margin: 25px 0;
-    background-color: lightgreen;
-  }
-
-  .your-box {
-    width: 150px;
-    height: 90px;
-    padding: 2px;
-    border: 3px solid rgb(154, 0, 192);
-    margin: 25px 0;
-    background-color: rgb(255, 181, 248); 
-    box-shadow: 4px 4px 10px rgba(159, 220, 255, 0.3);
-    border-radius: 10px;
-    
-  }
-</style>
-
-          }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text Changer</title>
   </head>
   <body>
-    <h3>Build Your Own Box</h3>
-    <p>Here's an example box:</p>
-    <div class="example-box">
-      Example: 150x80px content, 15px padding, 2px border
-    </div>
+    <h1 id="pageTitle">Hello, World!</h1>
+    <button onclick="updateTitle()">click</button>
 
-    <p>Now create your box here:</p>
-    <div class="your-box">Your box here - add CSS to match requirements!</div>
+    <p>Weather book</p>
+    <p id="Weather">loading weather date</p>
+    <button onclick="showWeather()">Get Weather</button>
+
+
+    <p> tempratutr</p>
+    <script src="script.js"></script>
   </body>
-</htmml>
+</html>
