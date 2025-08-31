@@ -1,160 +1,499 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <title>Do You Wanna Date Me? 💖</title>
+    <meta charset="utf-8" />
+    <title>Rizz Date</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <style>
+      /* ---------- Base ---------- */
+      :root {
+        --pink1: #ffc0cb;
+        --pink2: #ff9ac6;
+        --accent: #ff2f84;
+        --text: #660033;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
       body {
-        font-family: "Comic Sans MS", cursive, sans-serif;
-        background: linear-gradient(135deg, #ffc0cb, #ff99cc);
-        text-align: center;
-        padding: 50px;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: "Comic Sans MS", "Segoe UI", sans-serif;
+      }
+      body {
+        background: radial-gradient(
+          1200px 600px at 10% 10%,
+          #fff3f8 0%,
+          var(--pink1) 25%,
+          var(--pink2) 70%
+        );
         overflow: hidden;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 30px;
       }
 
-      h1 {
-        font-size: 2.5rem;
-        color: #ff1a75;
-        margin-bottom: 30px;
-        text-shadow: 2px 2px white;
+      /* ---------- Canvas (fireworks) ---------- */
+      canvas#fwCanvas {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 0;
       }
 
-      .buttons {
-        margin-top: 20px;
+      /* ---------- Center flower ---------- */
+      .flower-wrap {
+        position: fixed;
+        left: 50%;
+        top: 42%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        pointer-events: none;
+      }
+      .flower {
+        width: 140px;
+        height: 140px;
+        display: block;
+        transform-origin: center;
+        animation: flower-breathe 4s ease-in-out infinite;
+        filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.08));
+      }
+      @keyframes flower-breathe {
+        0% {
+          transform: translateY(0) rotate(0);
+        }
+        50% {
+          transform: translateY(-8px) rotate(8deg) scale(1.02);
+        }
+        100% {
+          transform: translateY(0) rotate(0);
+        }
+      }
+
+      /* ---------- Card / content ---------- */
+      .card {
         position: relative;
-        height: 200px;
-      }
-
-      button {
-        font-size: 1.2rem;
-        padding: 12px 25px;
+        z-index: 2;
+        width: min(760px, 92vw);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.9),
+          rgba(255, 255, 255, 0.75)
+        );
         border-radius: 20px;
-        border: none;
-        cursor: pointer;
-        transition: 0.3s;
+        padding: 36px 28px;
+        box-shadow: 0 12px 30px rgba(170, 20, 90, 0.08);
+        text-align: center;
+        backdrop-filter: blur(6px) saturate(1.1);
       }
 
-      #yesBtn {
-        background-color: #ff4da6;
-        color: white;
-        margin-right: 20px;
-        font-weight: bold;
+      #rizz {
+        font-size: 1.45rem;
+        color: var(--accent);
+        margin: 8px 0 18px;
+        text-shadow: 0 3px 8px rgba(255, 255, 255, 0.9);
+        transform-origin: center;
+        animation: rizz-in 1.4s ease both;
       }
-
-      #yesBtn:hover {
-        background-color: #ff1a75;
-        transform: scale(1.1);
-      }
-
-      #noBtn {
-        background-color: #cccccc;
-        position: absolute;
-      }
-
-      #result {
-        display: none;
-        margin-top: 40px;
-        animation: fadeIn 1.5s ease-in-out;
-      }
-
-      #result h2 {
-        font-size: 3rem;
-        color: #ff0066;
-        text-shadow: 3px 3px white;
-        animation: pop 1s ease infinite alternate;
-      }
-
-      #result img {
-        width: 250px;
-        margin-top: 20px;
-      }
-
-      @keyframes fadeIn {
+      @keyframes rizz-in {
         from {
           opacity: 0;
+          transform: translateY(20px) scale(0.98);
         }
         to {
           opacity: 1;
+          transform: none;
         }
       }
 
-      @keyframes pop {
+      h1 {
+        margin: 0 0 18px;
+        font-size: 2rem;
+        color: #ff1a75;
+        text-shadow: 2px 2px #fff;
+        animation: pulse 1.5s infinite alternate;
+      }
+      @keyframes pulse {
         from {
           transform: scale(1);
         }
         to {
-          transform: scale(1.1);
+          transform: scale(1.03);
         }
       }
 
-      /* floating hearts */
-      .heart {
-        position: fixed;
-        bottom: 0;
-        font-size: 2rem;
-        animation: floatUp 5s linear infinite;
-        color: #ff1a75;
-        opacity: 0.8;
+      .buttons {
+        margin-top: 18px;
+        position: relative;
+        height: 140px; /* area for the running no-button */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+      }
+      button {
+        cursor: pointer;
+        border: 0;
+        border-radius: 14px;
+        padding: 12px 22px;
+        font-weight: 700;
+        font-size: 1.05rem;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+      }
+      button:active {
+        transform: translateY(2px);
+      }
+      #yesBtn {
+        background: linear-gradient(180deg, #ff6fb3, #ff3a86);
+        color: #fff;
+        letter-spacing: 0.6px;
+      }
+      #noBtn {
+        background: #f4f4f6;
+        color: #333;
+        position: absolute;
+        left: calc(50% + 120px);
+        top: 40px;
+        transition: left 0.12s ease, top 0.12s ease;
       }
 
-      @keyframes floatUp {
+      /* ---------- Result (big cool message) ---------- */
+      #result {
+        display: none;
+        margin-top: 22px;
+        animation: popIn 0.8s ease both;
+      }
+      @keyframes popIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      #result .big {
+        font-size: 2.6rem;
+        line-height: 1.05;
+        font-weight: 900;
+        background: linear-gradient(90deg, #ffd1e6, #ff88c9 50%, #ff6fb3);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        text-shadow: 0 10px 25px rgba(255, 100, 170, 0.12);
+        margin: 0;
+        animation: shimmer 3s linear infinite;
+      }
+      @keyframes shimmer {
         0% {
-          transform: translateY(0) scale(1);
+          filter: brightness(0.96);
+        }
+        50% {
+          filter: brightness(1.08);
+        }
+        100% {
+          filter: brightness(0.96);
+        }
+      }
+      #result .sub {
+        margin-top: 10px;
+        font-size: 1.05rem;
+        color: #7a1638;
+      }
+
+      /* ---------- Hearts ---------- */
+      .heart {
+        position: fixed;
+        bottom: -30px;
+        font-size: 1.9rem;
+        animation: heartUp 5s linear forwards;
+        pointer-events: none;
+        z-index: 3;
+        transform-origin: center;
+        opacity: 0.95;
+        text-shadow: 0 6px 14px rgba(255, 80, 160, 0.12);
+      }
+      @keyframes heartUp {
+        0% {
+          transform: translateY(0) rotate(0) scale(1);
+          opacity: 1;
+        }
+        60% {
           opacity: 1;
         }
         100% {
-          transform: translateY(-100vh) scale(1.5);
+          transform: translateY(-110vh) rotate(40deg) scale(1.5);
           opacity: 0;
+        }
+      }
+
+      /* ---------- Footer ---------- */
+      footer {
+        margin-top: 18px;
+        color: #6a1331;
+        font-weight: 700;
+        font-size: 0.95rem;
+        opacity: 0.95;
+      }
+
+      /* small responsive tweaks */
+      @media (max-width: 520px) {
+        .flower {
+          width: 110px;
+          height: 110px;
+        }
+        #rizz {
+          font-size: 1.05rem;
+        }
+        h1 {
+          font-size: 1.5rem;
+        }
+        #result .big {
+          font-size: 1.8rem;
+        }
+        .buttons {
+          height: 120px;
         }
       }
     </style>
   </head>
   <body>
-    <h1>Do you wanna date me? 💌</h1>
-    <div class="buttons">
-      <button id="yesBtn">Yes 💕</button>
-      <button id="noBtn">No 😢</button>
-    </div>
-    <div id="result">
-      <h2>Yay!!! Thank you 💖 You're the sweetest! ✨</h2>
-      <img
-        src="https://upload.wikimedia.org/wikipedia/en/0/05/Hello_Kitty_character_portrait.png"
-        alt="Hello Kitty"
-      />
+    <!-- fireworks canvas -->
+    <canvas id="fwCanvas"></canvas>
+
+    <!-- centered animated flower (SVG inline) -->
+    <div class="flower-wrap" aria-hidden="true">
+      <svg
+        class="flower"
+        viewBox="0 0 200 200"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-label="flower"
+      >
+        <defs>
+          <radialGradient id="g0" cx="50%" cy="40%">
+            <stop offset="0%" stop-color="#fff5f9" />
+            <stop offset="100%" stop-color="#ffd6ec" />
+          </radialGradient>
+          <radialGradient id="g1" cx="50%" cy="30%">
+            <stop offset="0%" stop-color="#fff6f9" />
+            <stop offset="100%" stop-color="#ffb3da" />
+          </radialGradient>
+        </defs>
+        <g transform="translate(100,100)">
+          <g id="petals" fill="url(#g1)">
+            <ellipse rx="22" ry="48" transform="rotate(0) translate(60,0)" />
+            <ellipse rx="22" ry="48" transform="rotate(45) translate(60,0)" />
+            <ellipse rx="22" ry="48" transform="rotate(90) translate(60,0)" />
+            <ellipse rx="22" ry="48" transform="rotate(135) translate(60,0)" />
+            <ellipse rx="22" ry="48" transform="rotate(180) translate(60,0)" />
+            <ellipse rx="22" ry="48" transform="rotate(225) translate(60,0)" />
+            <ellipse rx="22" ry="48" transform="rotate(270) translate(60,0)" />
+            <ellipse rx="22" ry="48" transform="rotate(315) translate(60,0)" />
+          </g>
+          <circle r="28" fill="url(#g0)" stroke="#ff87c0" stroke-width="3" />
+          <circle r="10" fill="#ff6fb3" opacity="0.95" />
+        </g>
+      </svg>
     </div>
 
+    <!-- main UI -->
+    <div class="card" role="main">
+      <div id="rizz">
+        Girl, are you a magician? Because whenever I look at you, everyone
+        else disappears.
+      </div>
+
+      <div id="question" aria-live="polite">
+        <h1>So… would you wanna date me?</h1>
+
+        <div class="buttons" id="buttonArea">
+          <button id="yesBtn" aria-label="Yes">Yes</button>
+          <button id="noBtn" aria-label="No">No</button>
+        </div>
+
+        <div id="result" role="status" aria-hidden="true">
+          <div class="big">YAY!!!</div>
+          <div class="sub">You're the sweetest — thank you!</div>
+        </div>
+      </div>
+
+      <footer>Made by Sai</footer>
+    </div>
+
+    <!-- ---------- Behavior JS: hearts + fireworks + evasive "No" ---------- -->
     <script>
-      const noBtn = document.getElementById("noBtn");
+      /* ----------------- Canvas fireworks ----------------- */
+      const canvas = document.getElementById("fwCanvas");
+      const ctx = canvas.getContext("2d");
+      let W = (canvas.width = innerWidth);
+      let H = (canvas.height = innerHeight);
+      window.addEventListener("resize", () => {
+        W = canvas.width = innerWidth;
+        H = canvas.height = innerHeight;
+      });
+
+      const particles = [];
+      const gravity = 0.02;
+      const rand = (min, max) => Math.random() * (max - min) + min;
+
+      function spawnFirework(x, y, colorSet, count = 90) {
+        for (let i = 0; i < count; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = rand(1.8, 6.2) * Math.random() ** 0.5;
+          const vx = Math.cos(angle) * speed;
+          const vy = Math.sin(angle) * speed;
+          const life = rand(55, 110);
+          const size = rand(1.5, 3.8);
+          const color = colorSet[Math.floor(Math.random() * colorSet.length)];
+          particles.push({ x, y, vx, vy, life, age: 0, size, color, alpha: 1 });
+        }
+      }
+
+      function bigFireworkShow(centerX, centerY) {
+        const colorSets = [
+          ["#ff0066", "#ff8abb", "#ffd1e6", "#ffcc66"],
+          ["#66ffcc", "#66ccff", "#a0f", "#ffd1e6"],
+          ["#ff66ff", "#ffcc00", "#66ff66", "#66ccff"],
+        ];
+        spawnFirework(centerX, centerY, colorSets[0], 140);
+        for (let i = 0; i < 6; i++) {
+          const rx = centerX + rand(-180, 180);
+          const ry = centerY + rand(-160, 160);
+          spawnFirework(rx, ry, colorSets[i % colorSets.length], rand(60, 110));
+        }
+      }
+
+      function updateAndDraw() {
+        ctx.clearRect(0, 0, W, H);
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.vy += gravity * (p.size * 0.12);
+          p.x += p.vx;
+          p.y += p.vy;
+          p.age++;
+          p.alpha = Math.max(0, 1 - p.age / p.life);
+
+          ctx.beginPath();
+          ctx.globalAlpha = p.alpha * 0.95;
+          const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 6);
+          g.addColorStop(0, p.color);
+          g.addColorStop(0.2, p.color);
+          g.addColorStop(1, "rgba(255,255,255,0)");
+          ctx.fillStyle = g;
+          ctx.arc(p.x, p.y, p.size * 6, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.globalAlpha = p.alpha;
+          ctx.fillStyle = p.color;
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+
+          if (p.age > p.life) particles.splice(i, 1);
+        }
+        requestAnimationFrame(updateAndDraw);
+      }
+      updateAndDraw();
+
+      /* ----------------- UI & effects ----------------- */
       const yesBtn = document.getElementById("yesBtn");
+      const noBtn = document.getElementById("noBtn");
       const result = document.getElementById("result");
-      const buttonsDiv = document.querySelector(".buttons");
+      const buttonArea = document.getElementById("buttonArea");
+      const question = document.getElementById("question");
+      const rizz = document.getElementById("rizz");
+
+      setTimeout(() => {
+        rizz.style.transition = "opacity .4s";
+        rizz.style.opacity = "0";
+        setTimeout(() => {
+          rizz.style.display = "none";
+          question.style.display = "block";
+        }, 420);
+      }, 3000);
+
+      let heartInterval = null;
+      function startHearts() {
+        if (heartInterval) return;
+        heartInterval = setInterval(() => {
+          const h = document.createElement("div");
+          h.className = "heart";
+          h.textContent = "♥";
+          h.style.left = Math.random() * 92 + 2 + "vw";
+          h.style.fontSize = rand(18, 36) + "px";
+          document.body.appendChild(h);
+          setTimeout(() => h.remove(), 5200);
+        }, 260);
+      }
 
       yesBtn.addEventListener("click", () => {
         result.style.display = "block";
-        buttonsDiv.style.display = "none";
-        spawnHearts();
+        result.setAttribute("aria-hidden", "false");
+        buttonArea.style.display = "none";
+        startHearts();
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2 - 20;
+        bigFireworkShow(centerX, centerY);
+        let rounds = 0;
+        const showInterval = setInterval(() => {
+          const cx = centerX + rand(-260, 260);
+          const cy = centerY + rand(-220, 220);
+          spawnFirework(
+            cx,
+            cy,
+            ["#ff1166", "#ffd14f", "#66ffcc", "#66b3ff", "#ff66ff"],
+            rand(60, 110)
+          );
+          rounds++;
+          if (rounds > 8) clearInterval(showInterval);
+        }, 350);
       });
 
-      noBtn.addEventListener("mouseover", () => {
-        const x = Math.floor(Math.random() * 200);
-        const y = Math.floor(Math.random() * 150);
-        noBtn.style.left = x + "px";
-        noBtn.style.top = y + "px";
-      });
-
-      function spawnHearts() {
-        setInterval(() => {
-          const heart = document.createElement("div");
-          heart.classList.add("heart");
-          heart.innerHTML = "💖";
-          heart.style.left = Math.random() * 100 + "vw";
-          document.body.appendChild(heart);
-
-          setTimeout(() => {
-            heart.remove();
-          }, 5000);
-        }, 500);
+      function moveNoButton() {
+        const areaRect = buttonArea.getBoundingClientRect();
+        const btnRect = noBtn.getBoundingClientRect();
+        const maxLeft = Math.max(6, areaRect.width - btnRect.width - 6);
+        const maxTop = Math.max(6, areaRect.height - btnRect.height - 6);
+        const nx = Math.floor(rand(6, maxLeft));
+        const ny = Math.floor(rand(6, maxTop));
+        noBtn.style.left = nx + "px";
+        noBtn.style.top = ny + "px";
       }
+
+      noBtn.addEventListener("mouseenter", () => {
+        moveNoButton();
+        const r = noBtn.getBoundingClientRect();
+        const fx = r.left + r.width / 2 + rand(-30, 30);
+        const fy = r.top + r.height / 2 + rand(-30, 30);
+        spawnFirework(fx, fy, ["#ff66aa", "#ffcc66", "#66ccff", "#ff66ff"], 60);
+      });
+
+      noBtn.addEventListener("click", () => {
+        const r = noBtn.getBoundingClientRect();
+        const fx = r.left + r.width / 2;
+        const fy = r.top + r.height / 2;
+        spawnFirework(fx, fy, ["#ff0066", "#ffcc00", "#66ff66"], 40);
+        for (let i = 0; i < 2; i++) setTimeout(moveNoButton, i * 80 + 10);
+      });
+
+      window.addEventListener("keydown", (e) => {
+        if (e.key.toLowerCase() === "r") {
+          rizz.style.display = "none";
+          question.style.display = "block";
+        }
+      });
+
+      question.style.display = "none";
     </script>
   </body>
 </html>
