@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Do You Wanna Date Me? 💖</title>
+    <style>
+      body {
+        font-family: "Comic Sans MS", cursive, sans-serif;
+        background: linear-gradient(135deg, #ffc0cb, #ff99cc);
+        text-align: center;
+        padding: 50px;
+        overflow: hidden;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        color: #ff1a75;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px white;
+      }
+
+      .buttons {
+        margin-top: 20px;
+        position: relative;
+        height: 200px;
+      }
+
+      button {
+        font-size: 1.2rem;
+        padding: 12px 25px;
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      #yesBtn {
+        background-color: #ff4da6;
+        color: white;
+        margin-right: 20px;
+        font-weight: bold;
+      }
+
+      #yesBtn:hover {
+        background-color: #ff1a75;
+        transform: scale(1.1);
+      }
+
+      #noBtn {
+        background-color: #cccccc;
+        position: absolute;
+      }
+
+      #result {
+        display: none;
+        margin-top: 40px;
+        animation: fadeIn 1.5s ease-in-out;
+      }
+
+      #result h2 {
+        font-size: 3rem;
+        color: #ff0066;
+        text-shadow: 3px 3px white;
+        animation: pop 1s ease infinite alternate;
+      }
+
+      #result img {
+        width: 250px;
+        margin-top: 20px;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes pop {
+        from {
+          transform: scale(1);
+        }
+        to {
+          transform: scale(1.1);
+        }
+      }
+
+      /* floating hearts */
+      .heart {
+        position: fixed;
+        bottom: 0;
+        font-size: 2rem;
+        animation: floatUp 5s linear infinite;
+        color: #ff1a75;
+        opacity: 0.8;
+      }
+
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100vh) scale(1.5);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Do you wanna date me? 💌</h1>
+    <div class="buttons">
+      <button id="yesBtn">Yes 💕</button>
+      <button id="noBtn">No 😢</button>
+    </div>
+    <div id="result">
+      <h2>Yay!!! Thank you 💖 You're the sweetest! ✨</h2>
+      <img
+        src="https://upload.wikimedia.org/wikipedia/en/0/05/Hello_Kitty_character_portrait.png"
+        alt="Hello Kitty"
+      />
+    </div>
+
+    <script>
+      const noBtn = document.getElementById("noBtn");
+      const yesBtn = document.getElementById("yesBtn");
+      const result = document.getElementById("result");
+      const buttonsDiv = document.querySelector(".buttons");
+
+      yesBtn.addEventListener("click", () => {
+        result.style.display = "block";
+        buttonsDiv.style.display = "none";
+        spawnHearts();
+      });
+
+      noBtn.addEventListener("mouseover", () => {
+        const x = Math.floor(Math.random() * 200);
+        const y = Math.floor(Math.random() * 150);
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+      });
+
+      function spawnHearts() {
+        setInterval(() => {
+          const heart = document.createElement("div");
+          heart.classList.add("heart");
+          heart.innerHTML = "💖";
+          heart.style.left = Math.random() * 100 + "vw";
+          document.body.appendChild(heart);
+
+          setTimeout(() => {
+            heart.remove();
+          }, 5000);
+        }, 500);
+      }
+    </script>
+  </body>
+</html>
